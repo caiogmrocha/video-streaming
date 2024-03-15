@@ -1,3 +1,10 @@
+# Tasks
+
+- [x] PoC
+- [ ] Dockerize
+- [ ] Enqueue (BullMQ)
+- [ ] Monitoring
+
 # Setup
 
 ```bash
