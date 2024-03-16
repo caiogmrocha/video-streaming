@@ -11,6 +11,9 @@ dependencies:
   express:
     specifier: ^4.18.3
     version: 4.18.3
+  hls-server:
+    specifier: ^1.5.0
+    version: 1.5.0
   mime-types:
     specifier: ^2.1.35
     version: 2.1.35
@@ -636,6 +639,18 @@ packages:
       function-bind: 1.1.2
     dev: false
 
+  /hls-server@1.5.0:
+    resolution: {integrity: sha512-uDTPyuNvHjd5KkK/Zmm6vAWERdRp0l8rlkfSO56KcJGsEfFMwVcgkzbScTmrV+kuOq9FznWf9ze9pprtGEletA==}
+    hasBin: true
+    dependencies:
+      http-attach: 1.0.0
+      minimist: 1.2.8
+    dev: false
+
+  /http-attach@1.0.0:
+    resolution: {integrity: sha512-RWbYNCz3ybfIvjbELCaLD3eh01yKmqro/hoCzBFiUCoHZfb6FdNeSalYjMInVGsM0cj7M8DmXf290sWFJLsz4w==}
+    dev: false
+
   /http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
@@ -697,6 +712,10 @@ packages:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: false
+
+  /minimist@1.2.8:
+    resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
     dev: false
 
   /ms@2.0.0:
