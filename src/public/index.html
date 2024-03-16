@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HLS Video Player</title>
+</head>
+<body>
+  <video src="" id="video" width="500" height="500" controls></video>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    (() => {
+      const video = document.querySelector('video#video');
+      const { searchParams } = new URL(location.href);
+
+      const videoEndpoint = `/uploads/sliced-videos/${searchParams.get('videoId')}/320x240.m3u8`;
+
+      if (!Hls.isSupported()) {
+        return;
+      }
+
+      if (video.canPlayType('application/cnd.apple.mpegurl')) {
+        video.src = videoEndpoint;
+
+        video.addEventListener('loadedmetadata', () => video.play());
+      } else {
+        const hls = new Hls();
+
+        hls.loadSource(videoEndpoint);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tsx watch ./src/index.ts"
+    "dev": "npx tsx watch ./src/index.ts",
+    "debug": "npx tsx watch --inspect ./src/index.ts"
   },
   "keywords": [],
   "author": "",
