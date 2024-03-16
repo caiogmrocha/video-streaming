@@ -8,20 +8,36 @@
 <body>
   <video src="" id="video" width="500" height="500" controls></video>
 
+  <fieldset>
+    <label for="resolutions">Resolutions</label>
+    <select name="resolutions" id="resolutions">
+      <option value="320x240" selected>240p</option>
+      <option value="640x360">360p</option>
+      <option value="640x480">480p</option>
+      <option value="1280x720">720p</option>
+      <option value="1920x1080">1080p</option>
+    </select>
+  </fieldset>
+
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
-    (() => {
+    function renderVideoPlayer(videoId, resolution = '320x240') {
       const video = document.querySelector('video#video');
-      const { searchParams } = new URL(location.href);
-
-      const videoEndpoint = `/uploads/sliced-videos/${searchParams.get('videoId')}/320x240.m3u8`;
+      const videoEndpoint = `/uploads/sliced-videos/${videoId}/${resolution}.m3u8`;
 
       if (!Hls.isSupported()) {
         return;
       }
 
+      video.pause();
+
+      let currentTime = video.currentTime;
+
       if (video.canPlayType('application/cnd.apple.mpegurl')) {
         video.src = videoEndpoint;
+
+        video.currentTime = currentTime;
+        console.log(currentTime)
 
         video.addEventListener('loadedmetadata', () => video.play());
       } else {
@@ -30,8 +46,23 @@
         hls.loadSource(videoEndpoint);
         hls.attachMedia(video);
 
+        video.currentTime = currentTime;
+        console.log(currentTime)
+
         hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
       }
+    }
+
+    const { searchParams } = new URL(location.href);
+
+    (() => {
+      renderVideoPlayer(searchParams.get('videoId'));
+
+      document.querySelector('select[name=resolutions]').addEventListener('change', (event) => {
+        const selectedResolution = event.target.value;
+
+        renderVideoPlayer(searchParams.get('videoId'), selectedResolution);
+      });
     })();
   </script>
 </body>

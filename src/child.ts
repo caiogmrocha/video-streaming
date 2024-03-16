@@ -6,10 +6,10 @@ import ffmpeg from 'fluent-ffmpeg';
 
 const resolutions = [
   '320x240',
-  // '640x360',
-  // '640x480',
-  // '1280x720',
-  // '1920x1080'
+  '640x360',
+  '640x480',
+  '1280x720',
+  '1920x1080',
 ];
 
 let c = 0;
@@ -26,13 +26,15 @@ let handler = ffmpeg({
   }
 });
 
-const fileUUID = crypto.randomUUID();
+const videoId = crypto.randomUUID();
+
+process.send && process.send({ videoId });
+
+fs.mkdirSync(path.resolve(__dirname, '..', 'uploads', `sliced-videos`, videoId));
 
 resolutions.forEach((resolution, index) => {
-  fs.mkdirSync(path.resolve(__dirname, '..', 'uploads', `sliced-videos`, fileUUID));
-
   handler = handler
-    .output(path.resolve(__dirname, '..', 'uploads', `sliced-videos`, fileUUID, `${resolution}.m3u8`))
+    .output(path.resolve(__dirname, '..', 'uploads', `sliced-videos`, videoId, `${resolution}.m3u8`))
     .addOptions([
       '-profile:v baseline',
       '-level 3.0',

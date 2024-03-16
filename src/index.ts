@@ -23,20 +23,22 @@ app.post('/videos/upload', (req, res) => {
     stdio: ['pipe', 1, 2, 'ipc']
   });
 
+  processor.on('message', ({ videoId }: any) => {
+    res.status(201).json({ videoId });
+  });
+
   bb
-  .on('file', (name, file, info) => file.pipe(<stream.Writable>processor.stdin))
-  .on('error', res.send)
+    .on('file', (name, file, info) => file.pipe(<stream.Writable>processor.stdin))
+    .on('error', res.send)
 
   req.pipe(bb);
-
-  processor.on('close', () => res.send('end'));
 });
 
 const httpServer = app.listen(3333, () => {
   console.log('Server is running on http://localhost:3333');
 });
 
-httpServer.setTimeout(1000 * 60);
+httpServer.setTimeout(1000 * 60 * 3);
 
 new HlsServer(httpServer, {
 
