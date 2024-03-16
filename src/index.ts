@@ -19,18 +19,16 @@ app.post('/videos/upload', (req, res) => {
   });
 
   bb
-  .on('file', (name, file, info) => {
-    file.pipe(<stream.Writable>processor.stdin);
-  })
+  .on('file', (name, file, info) => file.pipe(<stream.Writable>processor.stdin))
   .on('error', res.send)
 
   req.pipe(bb);
 
-  processor.on('close', () => {
-    res.send('end')
-  });
+  processor.on('close', () => res.send('end'));
 });
 
-app.listen(3333, () => {
+const server = app.listen(3333, () => {
   console.log('Server is running on port 3333');
 });
+
+server.setTimeout(1000 * 60);
